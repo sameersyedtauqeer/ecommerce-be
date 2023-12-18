@@ -16,7 +16,7 @@ const orderSchema = new mongoose.Schema({
     // deliveryCharge: String,
     // totalAmount: String,
 
-})
+}, { timestamps: true })
 
 const ordersModel = mongoose.model("order", orderSchema)
 module.exports = ordersModel

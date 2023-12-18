@@ -3,17 +3,18 @@ const JWT_SECRET = "qwertyuiopasdfghjkl"
 
 
 const checkLogin = (req, res, next) => {
-    const { authorization } = req.headers
-    if (!authorization) {
-        return res.status(401).json({ message: "You must be logged in" })
+    let token = req.headers['authorization'];
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
     }
-    try {
-        const { userID } = jwt.verify(authorization, JWT_SECRET)
-        req.user = userID
-        next() // Continue to the next middleware or route handler
-    } catch (error) {
-        return res.status(401).json({ message: "Invalid" })
-    }
+    token = token.replace('Bearer ', '');
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Token verification failed' });
+        }
+        req.user = decoded;
+        next();
+    });
 }
 
 

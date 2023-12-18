@@ -18,6 +18,19 @@ app.use(router);
 app.use('/uploads', express.static('uploads'));
 
 
+// error handling middle error
+
+app.use((error, req, res, next) => {
+    error.statusCode = error.statusCode || 500;
+    error.status = error.status || "error";
+    res.status(error.statusCode).json({
+        status: error.statusCode,
+        message: error.message
+
+    })
+})
+
+
 // DB Connections 
 
 const DBURI = "mongodb+srv://syedsameerali26:petacare123@cluster0.nj1cvom.mongodb.net/?retryWrites=true&w=majority"

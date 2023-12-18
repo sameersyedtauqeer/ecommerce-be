@@ -1,6 +1,17 @@
 const notifiModel = require("../models/notificationModel")
 const ordersModel = require("../models/ordersModel")
 const productModel = require("../models/productModel")
+const Pusher = require("pusher");
+
+
+const pusher = new Pusher({
+    appId: "1682952",
+    key: "5f55ea6a3a8ec02183d2",
+    secret: "db2a087cbe35009bb097",
+    cluster: "ap2",
+    useTLS: true
+});
+
 
 
 const orderController = {
@@ -60,8 +71,14 @@ const orderController = {
                             address: address,
                             order_no: orderNumber,
                             order_id: result?._id
-
                         })
+                        pusher.trigger("my-channel", "my-event", {
+                            message: "new notification",
+                            title: name,
+                            address: address,
+                            order_no: orderNumber,
+                            order_id: result?._id
+                        });
                         return res.status(200).json({ message: "Thanks for your purchase", result, status: true })
                     })
                     .catch((err) => {
@@ -144,7 +161,6 @@ const orderController = {
 
         notifiModel.findByIdAndUpdate(notificationId, { is_read: true }).exec()
         ordersModel.findById(id)
-            .sort({ id: -1 })
             .then((data) => {
                 res.json({
                     message: "Single Order Fetched ",
@@ -160,6 +176,54 @@ const orderController = {
                 })
             })
     },
+
+    getKanban: async (req, res) => {
+        ordersModel.find({})
+            .then((data) => {
+                let allOrders = {
+                    Pending: {
+                        name: "Pending",
+                        items: [],
+                    },
+                    Confirmed: {
+                        name: "Confirmed",
+                        items: []
+                    },
+                    Processing: {
+                        name: "Processing",
+                        items: []
+                    },
+                    outForDelivery: {
+                        name: "Out For Delivery",
+                        items: []
+                    },
+                    delivered: {
+                        name: "Delivered",
+                        items: []
+                    }
+                };
+                data.map((val, i) => {
+                    if (val?.orderStatus != "Out For Delivery") {
+                        allOrders[val?.orderStatus].items.push({ id: val?._id, content: val?.orderNo })
+                    } else {
+                        allOrders['outForDelivery'].items.push({ id: val?._id, content: val?.orderNo })
+                    }
+                })
+                res.json({
+                    message: "All Orders Fetched",
+                    status: true,
+                    allOrders
+                })
+            })
+            .catch((error) => {
+                res.json({
+                    message: "Invalid Error",
+                    status: false,
+                    error
+                })
+            })
+    }
+
 
 }
 

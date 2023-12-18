@@ -3,7 +3,7 @@ const notificationModel = require("../models/notificationModel")
 const notificationController = {
 
     getAllNotification: async (req, res) => {
-        notificationModel.find({}).exec()
+        notificationModel.find({}).sort({ _id: -1 }).exec()
             .then((data) => {
                 res.json({
                     message: "All Notification Fetched",

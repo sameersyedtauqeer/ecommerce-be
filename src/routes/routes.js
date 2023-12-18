@@ -13,6 +13,8 @@ const router = express.Router();
 router.post("/api/signup", userController.createUser)
 router.delete("/api/signup/:id", userController.deleteUser)
 router.post("/api/login", userController.login)
+router.post("/api/forgotPassword", userController.forgetPassword)
+router.put("/api/resetPassword/:token", userController.resetPassword)
 
 
 router.get("/api/test", checkLogin, userController.testing)
@@ -20,7 +22,7 @@ router.get("/api/test", checkLogin, userController.testing)
 
 // Brand API
 
-router.post("/api/brands", BrandController.createBrand);
+router.post("/api/brands", checkLogin, BrandController.createBrand);
 router.get("/api/brands", BrandController.getAllBrands);
 router.delete("/api/brands/:id", BrandController.deleteBrand);
 router.put("/api/brands", BrandController.updateBrand);
@@ -50,6 +52,7 @@ router.post("/api/order", orderController.createOrder)
 router.get("/api/order", orderController.getAllOrders)
 router.get("/api/order/:id?/:notificationId?", orderController.getSingleOrders)
 router.put("/api/order/:id", orderController.updateOrder)
+router.get("/api/kanban", orderController.getKanban)
 
 // Notification API
 
