@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+require('dotenv').config()
 const mongoose = require("mongoose");
-const PORT = 5000;
+// const PORT = 5000;
 const cors = require('cors');
 const router = require("./src/routes/routes");
+const PORT = process.env.PORT;
 
 // middleware
 
@@ -33,9 +35,9 @@ app.use((error, req, res, next) => {
 
 // DB Connections 
 
-const DBURI = "mongodb+srv://syedsameerali26:petacare123@cluster0.nj1cvom.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(DBURI)
+
+mongoose.connect(process.env.DBURI)
     .then((res) => { console.log("Connected to database") })
     .catch((err) => { console.log(err) })
 
