@@ -37,7 +37,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect(process.env.DBURI)
+mongoose.connect("mongodb+srv://syedsameerali26:petacare123@cluster0.nj1cvom.mongodb.net/?retryWrites=true&w=majority")
     .then((res) => { console.log("Connected to database") })
     .catch((err) => { console.log(err) })
 

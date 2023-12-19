@@ -2,7 +2,8 @@ const userModel = require("../models/userModel")
 const bcrypt = require("bcryptjs");
 const e = require("express");
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = "qwertyuiopasdfghjkl"
 
 const crypto = require("crypto")
 const sendMail = require("../utils/email")
