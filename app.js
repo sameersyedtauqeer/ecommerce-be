@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const router = require("./src/routes/routes");
 // const PORT = process.env.PORT;
-const PORT = 5000;
+// const PORT = 5000;
 
 // middleware
 
@@ -38,15 +38,15 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect("mongodb+srv://syedsameerali26:petacare123@cluster0.nj1cvom.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect(process.env.DBURI)
     .then((res) => { console.log("Connected to database") })
     .catch((err) => { console.log(err) })
 
 
 app.get("/", (req, res) => {
-    res.send(`App is running in Port ${PORT}`)
+    res.send(`App is running in Port ${process.env.PORT}`)
 })
 
-app.listen(PORT, () => {
-    console.log(`App is Running On ${PORT}`)
+app.listen(process.env.PORT, () => {
+    console.log(`App is Running On ${process.env.PORT}`)
 })

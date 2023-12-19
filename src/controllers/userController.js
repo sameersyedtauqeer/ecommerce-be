@@ -2,8 +2,7 @@ const userModel = require("../models/userModel")
 const bcrypt = require("bcryptjs");
 const e = require("express");
 const jwt = require('jsonwebtoken');
-// const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_SECRET = "qwertyuiopasdfghjkl"
+
 
 const crypto = require("crypto")
 const sendMail = require("../utils/email")
@@ -139,7 +138,7 @@ const userController = {
                 else {
                     const comparepass = bcrypt.compareSync(password, user.password)
 
-                    const token = jwt.sign({ userID: user._id }, JWT_SECRET)
+                    const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET)
 
                     if (comparepass) {
                         res.status(200).json({
@@ -335,7 +334,7 @@ const userController = {
                 user.resetPasswordExpires = undefined;
                 await user.save();
 
-                console.log("error" , error)
+                console.log("error", error)
                 res.status(500).json({
                     status: false,
                     message: "Failed to send reset token email"
