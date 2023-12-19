@@ -3,6 +3,10 @@
         {
             "src": "app.js",
             "use": "@vercel/node"
+        },
+        {
+            "src": "./uploads/*",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
@@ -10,5 +14,6 @@
             "src": "/(.*)",
             "dest": "app.js"
         }
-    ]
+    ],
+    "outputDirectory": "uploads"
 }

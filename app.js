@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 require('dotenv').config()
 const mongoose = require("mongoose");
+const path = require("path")
 // const PORT = 5000;
 const cors = require('cors');
 const router = require("./src/routes/routes");
@@ -18,7 +19,9 @@ app.use(cors({
 app.use(express.json());
 app.use(router);
 // app.use(express.static('uploads'));
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 
 // error handling middle error
