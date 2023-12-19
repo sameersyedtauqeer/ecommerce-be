@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 // const PORT = 5000;
 const cors = require('cors');
 const router = require("./src/routes/routes");
-const PORT = process.env.PORT;
+// const PORT = process.env.PORT;
+const PORT = 5000;
 
 // middleware
 
