@@ -6,6 +6,7 @@ const { userController } = require("../controllers/userController");
 const { checkLogin } = require("../middleware/middleware");
 const { orderController } = require("../controllers/orderController");
 const { notificationController } = require("../controllers/notificationController");
+const subCatController = require("../controllers/subCatController");
 const router = express.Router();
 
 // Auth APi
@@ -35,6 +36,12 @@ router.post("/api/category", CategoryController.createCategory);
 router.get("/api/category", CategoryController.getAllCategory);
 router.delete("/api/category/:id", CategoryController.deleteCategory);
 router.put("/api/category", CategoryController.updateCategory);
+
+// Sub Category API
+router.get("/api/sub-category", subCatController.getAllSubCategory);
+router.post("/api/sub-category", subCatController.createSubCategory);
+router.put("/api/sub-category/:id", subCatController.updateSubCategory)
+router.delete("/api/sub-category/:id", subCatController.deleteSubCategory);
 
 
 //  Products API
