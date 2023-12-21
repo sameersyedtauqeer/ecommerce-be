@@ -106,7 +106,7 @@ const subCatController = {
 
             if (!main_category) {
                 res.json({
-                    message: "Category is Required",
+                    message: "Main Category is Required",
                     status: "error"
                 })
                 return;
@@ -122,7 +122,7 @@ const subCatController = {
 
             if (!cat_id) {
                 res.json({
-                    message: "Category Id is Required",
+                    message: "Main Category Id is Required",
                     status: "error"
                 })
                 return;

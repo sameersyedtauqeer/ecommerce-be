@@ -3,10 +3,26 @@ const multer = require('multer');
 const path = require("path");
 
 
+const express = require("express");
+const app = express();
+
+
+app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+
 
 const storage = multer.diskStorage({
+    // destination: function (req, res, cb) {
+    //     cb(null, './uploads/');
+    // },
+    // destination: function (req, res, cb) {
+    //     cb(null, path.join(__dirname, 'uploads'));
+    // },
     destination: function (req, res, cb) {
-        cb(null, './uploads/');
+        const destinationPath = path.join(__dirname, '../../uploads');
+        console.log('Destination Path:', destinationPath);
+        cb(null, destinationPath);
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + "-" + file.originalname);
@@ -173,7 +189,7 @@ const productController = {
                 })
             })
     },
-    
+
     updateProducts: async (req, res) => {
         const { id } = req.params
 
