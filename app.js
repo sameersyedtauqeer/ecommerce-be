@@ -14,12 +14,12 @@ const router = require("./src/routes/routes");
 // app.options('*', cors()) // include before other routes
 app.use(cors({
     origin: '*',
-    methods: 'GET, PUT , DELETE , POST',
+    methods: 'GET, PUT, DELETE, POST, PATCH',
 }));
 app.use(express.json());
 app.use(router);
 // app.use(express.static('uploads'));
-// app.use('./uploads', express.static('uploads')); //////////
+app.use('./uploads', express.static('uploads')); 
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

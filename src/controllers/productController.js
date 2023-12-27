@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 
 
-app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
@@ -19,10 +19,13 @@ const storage = multer.diskStorage({
     // destination: function (req, res, cb) {
     //     cb(null, path.join(__dirname, 'uploads'));
     // },
+    // destination: function (req, res, cb) {
+    //     const destinationPath = path.join(__dirname, '../../uploads');
+    //     console.log('Destination Path:', destinationPath);
+    //     cb(null, destinationPath);
+    // },
     destination: function (req, res, cb) {
-        const destinationPath = path.join(__dirname, '../../uploads');
-        console.log('Destination Path:', destinationPath);
-        cb(null, destinationPath);
+        cb(null, '../../uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + "-" + file.originalname);
