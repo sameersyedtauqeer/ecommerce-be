@@ -2,6 +2,7 @@ const express = require("express");
 const BrandController = require("../controllers/brandController");
 const CategoryController = require("../controllers/categoryController");
 const { productController, uploads } = require("../controllers/productController");
+const { newProductController } = require("../controllers/newProductController");
 const { userController } = require("../controllers/userController");
 const { checkLogin } = require("../middleware/middleware");
 const { orderController } = require("../controllers/orderController");
@@ -52,6 +53,13 @@ router.delete("/api/products/:id", productController.deleteProduct)
 router.get("/api/products/:id", productController.getSingleProducts)
 router.put("/api/products/:id", uploads.fields([{ name: 'coverImage', maxCount: 1 }, { name: 'sampleImages[]', maxCount: 5 }]), productController.updateProducts)
 
+// new products Api 
+
+router.get("/api/new-products", newProductController.getAllNewProducts)
+router.get("/api/new-products/:slug", newProductController.getSingleNewProducts)
+router.post("/api/new-products", uploads.fields([{ name: 'image', maxCount: 1 }, { name: 'sampleImages[]', maxCount: 5 }]), newProductController.createNewProduct)
+router.put("/api/new-products/:id", uploads.fields([{ name: 'image', maxCount: 1 }, { name: 'sampleImages[]', maxCount: 5 }]), newProductController.updateNewProducts)
+router.delete("/api/new-products/:id", newProductController.deleteNewProduct)
 
 //  Order API
 
