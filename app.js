@@ -18,12 +18,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(router);
-// app.use(express.static('uploads'));
-// app.use(express.static('uploads')); 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// app.use('./uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use('/uploads', express.static('uploads'));
+// app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 
 // error handling middle error

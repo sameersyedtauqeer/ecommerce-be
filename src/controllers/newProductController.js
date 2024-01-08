@@ -8,7 +8,7 @@ const newProductModel = require("../models/newProductModel");
 const app = express();
 
 
-app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('../../uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
