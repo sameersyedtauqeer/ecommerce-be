@@ -1,4 +1,3 @@
-const productModel = require("../models/productModel");
 const multer = require('multer');
 const path = require("path");
 
