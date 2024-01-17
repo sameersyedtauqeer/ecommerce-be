@@ -61,9 +61,13 @@ const orderController = {
                     address,
                     paymentMethod: method,
                     subTotal: sum,
-                    orderNo: orderNumber
+                    orderNo: orderNumber,
+                    user_id: req.user?.userID
                 }
-                // console.log("obj to send", dtObj)
+
+
+                // return console.log("orderBy", req.user?.userID)
+
                 ordersModel.create(dtObj)
                     .then((result) => {
                         notifiModel.create({
@@ -139,12 +143,47 @@ const orderController = {
     },
 
     getAllOrders: async (req, res) => {
+
+        const page = Number(req.query.page) || 1
+        const limit = Number(req.query.limit) || 10
+
+        const startPage = (page - 1) * limit
+        const endPage = (page) * limit
+
+        const totalOrders = await ordersModel.countDocuments()
+
+        // const totalPages = Math.ceil(ordersModel.length)
+        const totalPages = Math.ceil(totalOrders / limit)
+
+        // return ("rotal pages" , totalPages)
+
+        const pagination = {}
+
+        if (endPage < totalOrders) {
+            pagination.next = {
+                next: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startPage > 0) {
+            pagination.previous = {
+                previous: page - 1,
+                limit: limit
+            }
+        }
+
         ordersModel.find({})
+            .sort({ _id: -1 })
+            .skip(startPage)
+            .limit(limit)
             .then((data) => {
                 res.json({
                     message: "All Orders Fetched",
                     status: true,
-                    data
+                    data,
+                    pagination,
+                    totalPages
                 })
             })
             .catch((error) => {
@@ -222,7 +261,29 @@ const orderController = {
                     error
                 })
             })
-    }
+    },
+
+
+    getMyOrders: async (req, res) => {
+
+
+        ordersModel.find({ user_id: req.user.userID })
+            .sort({ _id: -1 })
+            .then((data) => {
+                res.json({
+                    message: "Single Order Fetched ",
+                    status: true,
+                    data
+                })
+            })
+            .catch((error) => {
+                res.json({
+                    message: "ineternal server error",
+                    status: false,
+                    error
+                })
+            })
+    },
 
 
 }

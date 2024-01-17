@@ -63,8 +63,9 @@ router.delete("/api/new-products/:id", newProductController.deleteNewProduct)
 
 //  Order API
 
-router.post("/api/order", orderController.createOrder)
+router.post("/api/order", checkLogin, orderController.createOrder)
 router.get("/api/order", orderController.getAllOrders)
+router.get("/api/my-order", checkLogin, orderController.getMyOrders)
 router.get("/api/order/:id?/:notificationId?", orderController.getSingleOrders)
 router.put("/api/order/:id", orderController.updateOrder)
 router.get("/api/kanban", orderController.getKanban)

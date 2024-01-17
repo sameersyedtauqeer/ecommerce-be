@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { ObjectId } = mongoose.Schema.Types
 
 const orderSchema = new mongoose.Schema({
     // userId: String,
@@ -15,6 +16,7 @@ const orderSchema = new mongoose.Schema({
     subTotal: String,
     // deliveryCharge: String,
     // totalAmount: String,
+    user_id: String
 
 }, { timestamps: true })
 
